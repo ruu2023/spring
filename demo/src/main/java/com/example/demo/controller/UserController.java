@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.MenuItemDto;
 // 1. 必要なDTOとService、Annotationsをimport
 import com.example.demo.dto.UserCreateRequest;
 import com.example.demo.dto.UserResponse;
@@ -53,7 +54,9 @@ public class UserController {
     }
     
     @GetMapping("/test")
-    public List<String> getData () {
-    	return List.of("data");
+    public List<MenuItemDto> getData () {
+    	return List.of(
+    				new MenuItemDto(1L, "data")
+    			);
     }
 }
