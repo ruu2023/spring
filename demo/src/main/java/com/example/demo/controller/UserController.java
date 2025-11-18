@@ -51,4 +51,9 @@ public class UserController {
         // 10. @RequestBodyでJSONをDTOに変換し、Serviceに渡す
         return userService.createUser(requestDto);
     }
+    
+    @GetMapping("/test")
+    public List<String> getData () {
+    	return List.of("data");
+    }
 }
