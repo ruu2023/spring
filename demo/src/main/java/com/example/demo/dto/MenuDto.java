@@ -9,5 +9,11 @@ public class MenuDto {
 	// クライアントに返したいフィールドを定義
     private Long id;
     private String name;
-    private List<MenuItemDto> MenuLit;
+    private List<MenuItemDto> menuList;
+    
+    public MenuDto (Long id, String name, List<MenuItemDto> menuList) {
+    	this.id = id;
+    	this.name = name;
+    	this.menuList = menuList;
+    }
 }

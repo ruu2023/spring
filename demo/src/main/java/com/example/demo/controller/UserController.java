@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus; // 2. HTTPステータスコード用
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.MenuDto;
 import com.example.demo.dto.MenuItemDto;
 // 1. 必要なDTOとService、Annotationsをimport
 import com.example.demo.dto.UserCreateRequest;
@@ -53,10 +57,48 @@ public class UserController {
         return userService.createUser(requestDto);
     }
     
+    
+    private final Map<String, Object> menuMap = new HashMap<>();
+    private List<String> uniqueParent = new ArrayList<>();
     @GetMapping("/test")
-    public List<MenuItemDto> getData () {
-    	return List.of(
-    				new MenuItemDto(1L, "data")
+    public List<MenuDto> getData () {
+    	List<MenuItemDto> menus = List.of(
+    				new MenuItemDto(1L, "data1", "tab1"),
+    				new MenuItemDto(2L, "data2", "tab1"),
+    				new MenuItemDto(3L, "data3", "tab2"),
+    				new MenuItemDto(4L, "data4", "tab2")
     			);
+
+    	for(MenuItemDto menu : menus) {
+    		if(uniqueParent.contains(menu.getParentName())) {  continue; }
+    		uniqueParent.add(menu.getParentName());
+    	}
+    	
+    	for(String parent : uniqueParent) {
+    		List<Long> ids = menus.stream()
+    				.filter(m->m.getParentName() == parent)
+    				.map(m->m.getId())
+    				.toList();
+    		menuMap.put(parent, ids);
+    	}
+    	
+    	List<MenuDto> menuList = new ArrayList<>();
+    	Long id = 1L;
+    	for(String parent : uniqueParent) {
+    		List<Long> retrievedIds = (List<Long>) menuMap.get(parent);
+    		List<MenuItemDto> foundMenu = menus.stream()
+    				.filter(m->retrievedIds.contains( m.getId()))
+    				.toList();
+    		if(foundMenu == null) { continue; }
+    		
+    		menuList.add(new MenuDto(id, parent, foundMenu));
+    		id++;
+    				
+    	}
+    	
+    	return menuList;
+    			
+    	
     }
 }
+
