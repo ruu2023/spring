@@ -62,6 +62,7 @@ public class UserController {
     private List<String> uniqueParent = new ArrayList<>();
     @GetMapping("/test")
     public List<MenuDto> getData () {
+    	
     	List<MenuItemDto> menus = List.of(
     				new MenuItemDto(1L, "data1", "tab1"),
     				new MenuItemDto(2L, "data2", "tab1"),
@@ -93,12 +94,25 @@ public class UserController {
     		
     		menuList.add(new MenuDto(id, parent, foundMenu));
     		id++;
-    				
     	}
     	
     	return menuList;
     			
     	
+    }
+    
+    
+    @GetMapping("/testes")
+    public List<String> getTestes () {
+    	record Mapping(int id, String name) {}
+    	
+    	List<Mapping> listData = List.of(
+    			new Mapping(1, "カール"),
+    			new Mapping(2, "マーカス"),
+    			new Mapping(3, "コナー")
+    			);
+    	
+    	return listData.stream().map(m -> m.name()).toList();
     }
 }
 
