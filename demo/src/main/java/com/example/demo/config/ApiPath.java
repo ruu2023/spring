@@ -18,6 +18,7 @@ public final class ApiPath {
 			public static final String KADAI3 = "/api/v1/learning/kadai3";
 			public static final String KADAI4 = "/api/v1/learning/kadai4";
 			public static final String KADAI5 = "/api/v1/learning/kadai5";
+			public static final String THIRD1 = "/api/v1/learning/third1";
 		}
 	}
 	

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.config.ApiPath;
+import com.example.demo.dto.HeroDto;
 import com.example.demo.dto.MenuDto;
 import com.example.demo.dto.MenuItemDto;
 
@@ -165,4 +166,16 @@ public class LearningController {
         		String.format("・%2d日で%sわかる", 13, "少し")
         		);
     }
+    
+    // スッキリJava 実践編3版 オーバーライド
+    @GetMapping(ApiPath.V1.Learning.THIRD1)
+    public String third1() {
+    	List<HeroDto> heroList = new ArrayList<>();
+    	HeroDto hero = new HeroDto("みなと", 100);
+    	heroList.add(hero);
+    	hero = new HeroDto("みなと", 100);
+    	heroList.remove(hero);
+    	return "要素数=" + heroList.size();
+    }
+    
 }
